@@ -16,7 +16,7 @@ class RouteEventListener(private val saveRouteEventUseCase: SaveRouteEventUseCas
         try {
             saveRouteEventUseCase.save(routeEventDTO.toRoute())
         } catch (e: EntityAlreadyExistsException) {
-            log.warn("Route event already exists.", e)
+            log.warn(e.message)
         }
     }
 

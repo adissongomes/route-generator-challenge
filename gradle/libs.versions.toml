@@ -22,7 +22,7 @@ junit-jupiter-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engi
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 assertj = "org.assertj:assertj-core:3.25.1"
 
-spring-boot-starter-test = { group = "org.springframework.boot", name = "spring-boot-starter-actuator" }
+spring-boot-starter-test = { group = "org.springframework.boot", name = "spring-boot-starter-test" }
 spring-mockk = "com.ninja-squad:springmockk:4.0.2"
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version = { prefer = "2.0.11" } }
 slf4j-jdk = { group = "org.slf4j", name = "slf4j-jdk14", version = { prefer = "2.0.11" } }
