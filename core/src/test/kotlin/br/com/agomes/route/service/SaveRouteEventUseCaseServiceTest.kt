@@ -1,9 +1,10 @@
 package br.com.agomes.route.service
 
-import br.com.agomes.route.RouteEvent
+import br.com.agomes.route.Route
+import br.com.agomes.route.dto.toRouteEvent
 import br.com.agomes.route.exception.EntityAlreadyExistsException
-import br.com.agomes.route.newRouteEvent
-import br.com.agomes.route.repository.RouteEventRepository
+import br.com.agomes.route.newRouteEventDTO
+import br.com.agomes.route.repository.RouteRepository
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -20,30 +21,36 @@ import org.junit.jupiter.api.extension.ExtendWith
 class SaveRouteEventUseCaseServiceTest {
 
     @MockK
-    private lateinit var routeEventRepository: RouteEventRepository
+    private lateinit var routeRepository: RouteRepository
 
     @InjectMockKs
     private lateinit var service: SaveRouteEventUseCaseService
 
     @Test
     fun `should save event`() {
-        val slot = slot<RouteEvent>()
-        every { routeEventRepository.findByRouteIdAndStatus(any(), any()) } returns null
-        justRun { routeEventRepository.save(capture(slot)) }
+        val slot = slot<Route>()
+        every { routeRepository.findByRouteIdAndStatus(any(), any()) } returns null
+        justRun { routeRepository.save(capture(slot)) }
 
-        val route = newRouteEvent()
+        val route = newRouteEventDTO()
         service.save(route)
 
-        assertThat(slot.captured).isEqualTo(route)
+        val capturedRoute = slot.captured
+        assertThat(capturedRoute.id).isEqualTo(route.id)
+        assertThat(capturedRoute.status.toString()).isEqualTo(route.status)
+        assertThat(capturedRoute.originId).isEqualTo(route.originId)
+        assertThat(capturedRoute.destinationId).isEqualTo(route.destinationId)
+        assertThat(capturedRoute.courierId).isEqualTo(route.courierId)
+        assertThat(capturedRoute.events).hasSize(1)
     }
 
     @Test
     fun `should not save event when event already exists`() {
-        val route = newRouteEvent()
-        every { routeEventRepository.findByRouteIdAndStatus(any(), any()) } returns route
+        val route = newRouteEventDTO()
+        every { routeRepository.findByRouteIdAndStatus(any(), any()) } returns route.toRouteEvent()
 
         assertThrows<EntityAlreadyExistsException> { service.save(route) }
 
-        verify(exactly = 0) { routeEventRepository.save(any()) }
+        verify(exactly = 0) { routeRepository.saveEvent(any()) }
     }
 }

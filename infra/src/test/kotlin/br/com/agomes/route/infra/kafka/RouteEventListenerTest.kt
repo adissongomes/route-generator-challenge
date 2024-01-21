@@ -1,14 +1,13 @@
 package br.com.agomes.route.infra.kafka
 
 import br.com.agomes.route.exception.EntityAlreadyExistsException
-import br.com.agomes.route.infra.kafka.dto.RouteEventDTO
+import br.com.agomes.route.dto.RouteEventDTO
 import br.com.agomes.route.usecase.SaveRouteEventUseCase
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.justRun
 import io.mockk.verify
-import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.extension.ExtendWith

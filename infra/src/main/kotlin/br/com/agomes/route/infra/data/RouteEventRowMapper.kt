@@ -10,9 +10,6 @@ class RouteEventRowMapper : RowMapper<RouteEvent> {
         return RouteEvent(
             id = UUID.fromString(rs.getString("id")),
             routeId = UUID.fromString(rs.getString("route_id")),
-            originId = UUID.fromString(rs.getString("origin_id")),
-            destinationId = UUID.fromString(rs.getString("destination_id")),
-            courierId = UUID.fromString(rs.getString("courier_id")),
             status = enumValueOf(rs.getString("status")),
             eventTime = rs.getTimestamp("event_time").toInstant()
         )
