@@ -1,10 +1,9 @@
-package br.com.agomes.route.dto
+package br.com.agomes.route.infra.kafka.dto
 
 import br.com.agomes.route.RouteEvent
 import java.time.Instant
 import java.util.UUID
 
-// TODO move to infrastructure module
 data class RouteEventDTO(
     val id: UUID,
     val originId: UUID,

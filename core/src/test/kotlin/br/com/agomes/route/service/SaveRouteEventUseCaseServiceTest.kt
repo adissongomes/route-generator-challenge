@@ -17,13 +17,13 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockKExtension::class)
-class SaveRouteUseCaseServiceTest {
+class SaveRouteEventUseCaseServiceTest {
 
     @MockK
     private lateinit var routeEventRepository: RouteEventRepository
 
     @InjectMockKs
-    private lateinit var service: SaveRouteUseCaseService
+    private lateinit var service: SaveRouteEventUseCaseService
 
     @Test
     fun `should save event`() {
@@ -32,7 +32,7 @@ class SaveRouteUseCaseServiceTest {
         justRun { routeEventRepository.save(capture(slot)) }
 
         val route = newRouteEvent()
-        service.saveEvent(route)
+        service.save(route)
 
         assertThat(slot.captured).isEqualTo(route)
     }
@@ -42,7 +42,7 @@ class SaveRouteUseCaseServiceTest {
         val route = newRouteEvent()
         every { routeEventRepository.findByRouteIdAndStatus(any(), any()) } returns route
 
-        assertThrows<EntityAlreadyExistsException> { service.saveEvent(route) }
+        assertThrows<EntityAlreadyExistsException> { service.save(route) }
 
         verify(exactly = 0) { routeEventRepository.save(any()) }
     }

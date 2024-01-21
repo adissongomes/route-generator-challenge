@@ -2,13 +2,13 @@ package br.com.agomes.route.service
 
 import br.com.agomes.route.RouteEvent
 import br.com.agomes.route.exception.EntityAlreadyExistsException
+import br.com.agomes.route.helper.loggerFor
 import br.com.agomes.route.repository.RouteEventRepository
 import br.com.agomes.route.usecase.SaveRouteEventUseCase
-import org.slf4j.LoggerFactory
 
-class SaveRouteUseCaseService(private val routeEventRepository: RouteEventRepository) : SaveRouteEventUseCase {
+class SaveRouteEventUseCaseService(private val routeEventRepository: RouteEventRepository) : SaveRouteEventUseCase {
 
-    override fun saveEvent(route: RouteEvent) {
+    override fun save(route: RouteEvent) {
         isValid(route)
         routeEventRepository.save(route)
         log.info("Event saved: $route")
@@ -22,6 +22,6 @@ class SaveRouteUseCaseService(private val routeEventRepository: RouteEventReposi
     }
 
     companion object {
-        private val log = LoggerFactory.getLogger(SaveRouteUseCaseService::class.java)
+        private val log = loggerFor<SaveRouteEventUseCaseService>()
     }
 }
