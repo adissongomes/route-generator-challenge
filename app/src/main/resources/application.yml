@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: route-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/route
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      pool-name: route-service
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: route-service-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.type.mapping: route:br.com.agomes.route.infra.kafka.dto.RouteEventDTO
+      auto-offset-reset: earliest
+
+logging:
+  level:
+    org.springframework.kafka: WARN
+
+kafka:
+  topic:
+    route: routes

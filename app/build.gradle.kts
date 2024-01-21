@@ -6,8 +6,7 @@ plugins {
 
 dependencies {
     implementation(project(":core"))
-    implementation(libs.spring.boot.starter.kafka)
-    implementation(libs.spring.boot.starter.jdbc)
-    implementation(libs.postgres)
-    implementation(libs.jackson.kotlin)
+    implementation(project(":infra"))
+    implementation(libs.spring.boot.starter.web)
+    implementation(libs.spring.boot.starter.actuator)
 }

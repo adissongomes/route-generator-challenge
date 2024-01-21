@@ -1,4 +1,4 @@
-package br.com.agomes.route.infra.config
+package br.com.agomes.route.app.config
 
 import br.com.agomes.route.RouteEvent
 import br.com.agomes.route.RouteStatus
