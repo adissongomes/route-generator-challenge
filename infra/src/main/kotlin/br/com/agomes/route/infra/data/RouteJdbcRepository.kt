@@ -12,7 +12,8 @@ import java.util.UUID
 @Repository
 class RouteJdbcRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) : RouteRepository {
 
-    private val rowMapper = RouteEventRowMapper()
+    private val routeRowMapper = RouteRowMapper()
+    private val routeEventRowMapper = RouteEventRowMapper()
 
     override fun save(route: Route) {
         val count =
@@ -37,7 +38,10 @@ class RouteJdbcRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) 
 
         val params = mapOf("id" to id)
 
-        return jdbcTemplate.query(sql, params, RouteRowMapper()).firstOrNull()
+        val route = jdbcTemplate.query(sql, params, routeRowMapper).firstOrNull()?.apply {
+            events = findEventsByRouteId(id)
+        }
+        return route
     }
 
     override fun saveEvent(routeEvent: RouteEvent) {
@@ -49,7 +53,15 @@ class RouteJdbcRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) 
 
         val params = mapOf("route_id" to routeId, "status" to status.name)
 
-        return jdbcTemplate.query(sql, params, rowMapper).firstOrNull()
+        return jdbcTemplate.query(sql, params, routeEventRowMapper).firstOrNull()
+    }
+
+    private fun findEventsByRouteId(routeId: UUID): List<RouteEvent> {
+        val sql = "SELECT * FROM route_events WHERE route_id = :route_id"
+
+        val params = mapOf("route_id" to routeId)
+
+        return jdbcTemplate.query(sql, params, routeEventRowMapper)
     }
 
     companion object {

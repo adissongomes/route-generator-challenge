@@ -9,4 +9,6 @@ dependencies {
     implementation(project(":infra"))
     implementation(libs.spring.boot.starter.web)
     implementation(libs.spring.boot.starter.actuator)
+
+    testImplementation(libs.bundles.integration.test)
 }

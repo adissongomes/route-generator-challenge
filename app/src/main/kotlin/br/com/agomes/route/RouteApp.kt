@@ -1,9 +1,9 @@
-package br.com.agomes.route.app.config
+package br.com.agomes.route
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
-@SpringBootApplication(scanBasePackages = ["br.com.agomes.route"])
+@SpringBootApplication
 class RouteApp
 
 fun main() {
